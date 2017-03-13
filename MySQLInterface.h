@@ -12,15 +12,15 @@ class MySQLInterface: public DBInterfaceBase
 
  MySQLInterface(const Context& c): MySQL_Context(c) {}
 
- void Connect(const Context& c);
+ void Connect();
 
- void Lookup_column(const Context& c);
+ void Lookup_column();
 
- void Query(const Context& c);
+ void Query();
 
- void Insertdatapath(const Context& c);
+ void Insertdatapath();
 
- void Insertdatacode(const Context& c);
+ void Insertdatacode();
 
  bool IfConnect();
 

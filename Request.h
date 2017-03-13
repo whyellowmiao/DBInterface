@@ -33,10 +33,11 @@ class Request
  freqpro(reqpro){}
 
  Request(const std::vector<std::string>& property,
-         DB_Type db = MySQL,
+         const std::string& tablename,
          RequestProxy reqpro = lookup,
          const std::string& schema = "",
-         const std::string& tablename = ""):
+         DB_Type db = MySQL
+         ):
 
  fdb(db),
  freqpro(reqpro),

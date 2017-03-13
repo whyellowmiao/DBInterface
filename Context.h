@@ -20,6 +20,7 @@ class Context
 
  fCon_Info(coninf),
  fRequest(reque){}
+ Context() = default;
 
  virtual ~Context() = default;
 

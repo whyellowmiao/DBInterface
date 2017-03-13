@@ -2,6 +2,7 @@
 #define DBINTERFACEBASE_H
 
 #include <iostream>
+
 #include "Context.h"
 #include "Result.h"
 
@@ -10,23 +11,25 @@ class Result;
 class DBInterfaceBase
 {
 
- public:
+ //friend class DBInterface;
+
  //protected:
+ public:
 
  DBInterfaceBase() = default;
  virtual ~DBInterfaceBase() = default;
 
  //private:
 
- virtual void Connect(const Context&)  = 0;
+ virtual void Connect()  = 0;
 
- virtual void Query(const Context&)  = 0;
+ virtual void Query()  = 0;
 
- virtual void Lookup_column(const Context&) = 0;
+ virtual void Lookup_column() = 0;
 
- virtual void Insertdatapath(const Context&) = 0;
+ virtual void Insertdatapath() = 0;
 
- virtual void Insertdatacode(const Context&) = 0;
+ virtual void Insertdatacode() = 0;
 
  virtual Result& FetchResult() = 0;
 

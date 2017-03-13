@@ -1,10 +1,17 @@
-#include "DBInterface.h"
-#include "MySQLInterface.h"
+#include <iostream>
+#include "DataBaseSvc/DataBaseSvc.h"
+#include "SniperKernel/SvcFactory.h"
 
-DBInterface::DBInterface()
-//db_context(c)
+DECLARE_SERVICE(DataBaseSvc);
+
+DataBaseSvc::DataBaseSvc(const std::string& name):
+SvcBase(name)
 
 {
+ declProp("Url", furl);
+ declProp("User", fuser);
+ declProp("Password", fpassword);
+ declProp("DB_Type". fdbtype=1);
 
  #ifdef FORSNIPER
  LogInfo << "constructing DBInterface..." << std::endl;
@@ -12,30 +19,28 @@ DBInterface::DBInterface()
  std::cout << "constructing DBInterface..." << std::endl;
  #endif
 
-/* if(1==db_context.Get_Con_Info().GetDB())
+ if(1==fdbtype)
 
  {
 
   #ifdef FORSNIPER
   LogInfo << "DB_Svc will connect to MySQL with Connector..." << std::endl;
 
-  LogInfo << "the URL is " << db_context.Get_Con_Info().GetURL() << std::endl;
+  LogInfo << "the URL is " << furl << std::endl;
 
-  LogInfo << "Connector with User "
-            << db_context.Get_Con_Info().GetUSER() << std::endl;
+  LogInfo << "Connector with User " << fuser << std::endl;
 
   Use_MySQL_Connector();
 
   LogInfo << "DBInterface has been created!" << std::endl;
-  
+
   #else
-  std::cout << "DBInterface will connect to MySQL with Connector..." 
+  std::cout << "DBInterface will connect to MySQL with Connector..."
             << std::endl;
 
-  std::cout << "the URL is " << db_context.Get_Con_Info().GetURL() << std::endl;
+  std::cout << "the URL is " << furl << std::endl;
 
-  std::cout << "Connector with User " 
-            << db_context.Get_Con_Info().GetUSER() << std::endl;
+  std::cout << "Connector with User " << fuser << std::endl;
 
   Use_MySQL_Connector();
 
@@ -43,19 +48,14 @@ DBInterface::DBInterface()
 
   #endif
  }
-*/
 }
 
-void DBInterface::Use_MySQL_Connector()
-
+void DataBaseSvc::Use_MySQL_Connector()
 {
-
  svc = std::shared_ptr<MySQLInterface>(new MySQLInterface(db_context));
-
 }
 
-void DBInterface::Session(const Context& c)
-
+void DataBaseSvc::Session(const Context& c)
 {
 
  db_context = c;
@@ -80,7 +80,7 @@ void DBInterface::Session(const Context& c)
   std::cout << "DBInterface will connect to MySQL with Connector..."
             << std::endl;
 
-  std::cout << "the URL is " 
+  std::cout << "the URL is "
             << db_context.Get_Con_Info().GetURL() << std::endl;
 
   std::cout << "Connector with User "
@@ -129,31 +129,12 @@ void DBInterface::Session(const Context& c)
   Insertdatapath();
 
  }
-
 }
 
-/*int main()
-
+bool DataBaseSvc::initialize()
 {
+ Connect();
+}
 
- Con_Info coninfo(MySQL, "tcp://127.0.0.1", "root", "Xiao3woaini!");
-
- std::vector<std::string>
- column {"name", "owner", "species"};
- std::string table = "pet";
- std::string schema = "menagerie";
- Request request{column, MySQL, lookup, schema, table};
-
- Context context(coninfo, request);
-
- DB_Svc svc(context);
-
- //svc.Connect(context);
-
- //svc.Query(context);
- 
- svc.Session(context);
-
- return 0;
-
-}*/
+bool DataBaseSvc::finalize()
+{}

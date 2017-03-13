@@ -1,14 +1,14 @@
 #include "MySQLInterface.h"
 #include <stdexcept>
 
-void MySQLInterface::Connect(const Context& c)
+void MySQLInterface::Connect()
 {
 
  std::shared_ptr<sql::Connection>
  con(sql::mysql::get_driver_instance()
- ->connect(c.Get_Con_Info().GetURL(),
-           c.Get_Con_Info().GetUSER(),
-           c.Get_Con_Info().GetPASSWORD()));
+ ->connect(MySQL_Context.Get_Con_Info().GetURL(),
+           MySQL_Context.Get_Con_Info().GetUSER(),
+           MySQL_Context.Get_Con_Info().GetPASSWORD()));
 
  MySQL_Result.SetConnection(con);
 
@@ -16,10 +16,10 @@ void MySQLInterface::Connect(const Context& c)
 
  #ifdef FORSNIPER
  LogInfo << "Successfully accessed to " <<
- c.Get_Con_Info().GetURL() << std::endl;
+ MySQL_Context.Get_Con_Info().GetURL() << std::endl;
  #else
  std::cout << "Successfully accessed to " <<
- c.Get_Con_Info().GetURL() << std::endl;
+ MySQL_Context.Get_Con_Info().GetURL() << std::endl;
  #endif
 
  else
@@ -56,7 +56,7 @@ bool MySQLInterface::MySQL_Reconnect()
 
  for(int i=1;i<5;i++)
  {
-  Connect(MySQL_Context);
+  Connect();
   if(IfConnect())
   return true;
  }
@@ -73,7 +73,7 @@ bool MySQLInterface::MySQL_Reconnect()
 
 }
 
-void MySQLInterface::Lookup_column(const Context& c)
+void MySQLInterface::Lookup_column()
 
 {
 
@@ -86,14 +86,17 @@ void MySQLInterface::Lookup_column(const Context& c)
 
  CreateStmt();
 
- MySQL_Result.GetStatement()->execute("use "+c.Get_Request().GetSchema());
+ if(MySQL_Context.Get_Request().GetSchema().empty());
+ else MySQL_Result.GetStatement()->
+ execute("use "+MySQL_Context.Get_Request().GetSchema());
  //Read out data from the table
  std::string read_query = "select ";
- for (auto i : c.Get_Request().GetPro())
+ for (auto i : MySQL_Context.Get_Request().GetPro())
  read_query = read_query + i + ",";
  if(false == read_query.empty())
  read_query.erase(read_query.end()-1);
- read_query = read_query + " from " + c.Get_Request().GetTableName();
+ read_query = read_query + " from "
+            + MySQL_Context.Get_Request().GetTableName();
  read_query = read_query + " limit 0,5";
 
  #ifdef FORSNIPER
@@ -159,7 +162,7 @@ void MySQLInterface::CreateStmt()
 
 }
 
-void MySQLInterface::Query(const Context& c)
+void MySQLInterface::Query()
 
 {
  if(IfConnect())
@@ -171,67 +174,71 @@ void MySQLInterface::Query(const Context& c)
 
  CreateStmt();
 
- if(c.Get_Request().GetSchema().empty());
- else MySQL_Result.GetStatement()->execute("use "+c.Get_Request().GetSchema());
+ if(MySQL_Context.Get_Request().GetSchema().empty());
+ else MySQL_Result.GetStatement()->
+ execute("use "+MySQL_Context.Get_Request().GetSchema());
 
- MySQL_Result.GetStatement()->execute(c.Get_Request().GetSqlquery());
+ MySQL_Result.GetStatement()->
+ execute(MySQL_Context.Get_Request().GetSqlquery());
 
  }
 }
 
-void MySQLInterface::Insertdatapath(const Context& c)
+void MySQLInterface::Insertdatapath()
 
 {
  if(IfConnect())
  {
   CreateStmt();
   
-  if(c.Get_Request().GetSchema().empty());
+  if(MySQL_Context.Get_Request().GetSchema().empty());
   else 
-  MySQL_Result.GetStatement()->execute("use "+c.Get_Request().GetSchema());
+  MySQL_Result.GetStatement()->
+  execute("use "+MySQL_Context.Get_Request().GetSchema());
 
   std::string query;
   query = "load data local infile "
-        + c.Get_Request().GetSqlquery()
+        + MySQL_Context.Get_Request().GetSqlquery()
         + " into table "
-        + c.Get_Request().GetTableName();
+        + MySQL_Context.Get_Request().GetTableName();
   MySQL_Result.GetStatement()->execute(query);
 
   #ifdef FORSNIPER
   LogInfo << "Successfully inserted data to"
-          << c.Get_Request().GetTableName() << std::endl;
+          << MySQL_Context.Get_Request().GetTableName() << std::endl;
   #else
   std::cout << "Successfully inserted data to "
-            << c.Get_Request().GetTableName() << std::endl;
+            << MySQL_Context.Get_Request().GetTableName() << std::endl;
   #endif
 
  }
 }
 
-void MySQLInterface::Insertdatacode(const Context& c)
+void MySQLInterface::Insertdatacode()
 {
  if(IfConnect())
  {
   CreateStmt();
 
-  if(c.Get_Request().GetSchema().empty());
+  if(MySQL_Context.Get_Request().GetSchema().empty());
   else
-  MySQL_Result.GetStatement()->execute("use "+c.Get_Request().GetSchema());
+  MySQL_Result.GetStatement()->
+  execute("use "+MySQL_Context.Get_Request().GetSchema());
 
   std::string query;
   query = "insert into "
-        + c.Get_Request().GetTableName()
+        + MySQL_Context.Get_Request().GetTableName()
         + " values "
-        + c.Get_Request().GetSqlquery();
+        + MySQL_Context.Get_Request().GetSqlquery();
 
   MySQL_Result.GetStatement()->execute(query);
 
   #ifdef FORSNIPER
   LogInfo <<  "Successfully inserted data to "
-          << c.Get_Request().GetTableName() << std::endl;
+          << MySQL_Context.Get_Request().GetTableName() << std::endl;
   #else
   std::cout << "Successfully inserted data to "
-            << c.Get_Request().GetTableName() << std::endl;
+            << MySQL_Context.Get_Request().GetTableName() << std::endl;
   #endif
  }
 }

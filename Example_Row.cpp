@@ -34,9 +34,9 @@ int main()
 
  std::vector<std::string>
  column {"name", "owner", "species"};
- std::string table = "pet";
- std::string schema = "menagerie";
- Request request{column, MySQL, lookup, schema, table};
+ std::string table = "menagerie.pet";
+ //std::string schema = "menagerie";
+ Request request(column, table, lookup);
 
  Context context(coninfo, request);
 

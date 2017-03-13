@@ -46,8 +46,8 @@ std::shared_ptr<std::vector<T>> data;
 
 template <class T>
 DBiResultPtr<T>::DBiResultPtr(const Context& c):
-PtrContext(c),
-PtrSvc(c)
+PtrContext(c)
+//PtrSvc(c)
 {
 #ifdef FORSNIPER
 LogInfo << "Building Result Pointer" << std::endl;

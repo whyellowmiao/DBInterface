@@ -1,55 +1,47 @@
-#ifndef DBINTERFACE_H
-#define DBINTERFACE_H
+#ifndef DATABASESVC_H
+#define DATABASESVC_H
 
-#include <string>
+#include <boost/python.hpp>
 #include <memory>
+#include <string>
 #include "Result.h"
 #include "Context.h"
 #include "DBInterfaceBase.h"
+#include "SniperKernel/SvcBase.h"
 
 class DBInterfaceBase;
-
 class Result;
-
 class MySQLInterface;
 
-class DBInterface
+class DataBaseSvc : public SvcBase
 {
 
- public:
+ public :
 
- DBInterface();
- //DBInterface() = default;
- //virtual ~DBInterface();
+ DataBaseSvc(const std::string& name, const Context& c);
+ virtual ~DataBaseSvc();
 
- void Connect() const{ svc -> Connect(); }
+ bool initialize();
+ bool finalize();
 
  void Query() const{ svc -> Query(); }
-
  void Lookup_column() const { svc -> Lookup_column(); }
-
  void Insertdatapath() const { svc -> Insertdatapath(); }
-
  void Insertdatacode() const { svc -> Insertdatacode(); }
-
- void Session(const Context& c);
-
+ void Session(const Context&);
  Result& FetchResult() const { svc -> FetchResult(); }
+ private :
 
- private:
-
- //DB_Svc(std::shared_ptr<DB_Svc_Base> db_svc): svc(db_svc) {}
+ std::string furl;
+ std::string fuser;
+ std::string fpassword;
+ int fdbtype;
 
  std::shared_ptr<DBInterfaceBase> svc;
-
  Context db_context;
 
+ void Connect() const { svc -> Connect(); }
  void Use_MySQL_Connector();
-
 };
-
- //inline
-
- //DB_Svc::DB_Svc(const Context& c): svc(new MySQL_Svc(c)){}
 
 #endif

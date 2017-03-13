@@ -18,20 +18,22 @@ class Con_Info
 
  public:
 
- Con_Info(DB_Type db = MySQL):
+ Con_Info() = default;
+
+ Con_Info(DB_Type db):
 
  fdb(db){}
 
- Con_Info(DB_Type db = MySQL,
-          const std::string& url = "",
-          const std::string& user = "",
-          const std::string& password = ""):
+ Con_Info(DB_Type db,
+          const std::string& url,
+          const std::string& user,
+          const std::string& password):
 
  fdb(db),
  furl(url),
  fuser(user),
  fpassword(password){}
-
+ //virtual ~Con_Info() = default;
  DB_Type GetDB() const { return fdb; }
 
  const std::string GetURL() const { return furl; }
