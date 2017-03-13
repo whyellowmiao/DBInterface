@@ -11,7 +11,7 @@ SvcBase(name)
  declProp("Url", furl);
  declProp("User", fuser);
  declProp("Password", fpassword);
- declProp("DB_Type". fdbtype=1);
+ declProp("DB_Type", fdbtype=1);
 
  #ifdef FORSNIPER
  LogInfo << "constructing DBInterface..." << std::endl;

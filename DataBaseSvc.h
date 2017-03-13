@@ -18,7 +18,7 @@ class DataBaseSvc : public SvcBase
 
  public :
 
- DataBaseSvc(const std::string& name, const Context& c);
+ DataBaseSvc(const std::string& name);
  virtual ~DataBaseSvc();
 
  bool initialize();
