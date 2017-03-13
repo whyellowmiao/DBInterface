@@ -3,10 +3,10 @@
 
 #include <stdexcept>
 #include "Context.h"
-#include "DB_Svc.h"
+#include "DBInterface.h"
 #include "DB_TableRow.h"
 
-class DB_Svc;
+class DBInterface;
 
 template <class T> class DBiResultPtr
 {
@@ -36,7 +36,7 @@ void MvCursortoNext();
 
 Context PtrContext;
 
-DB_Svc PtrSvc;
+DBInterface PtrSvc;
 
 int RowCount;
 

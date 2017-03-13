@@ -2,7 +2,7 @@
 #define DBWRITER
 
 #include "Context.h"
-#include "DB_Svc.h"
+#include "DBInterface.h"
 #include "DB_TableRow.h"
 
 template <class T> class DBWriter
