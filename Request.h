@@ -57,7 +57,7 @@ class Request
  ftablename(tablename),
  fsqlquery(sqlquery){}
 
- virtual ~Request() = default;
+ virtual ~Request() {};
 
  const DB_Type GetDB() const { return fdb; }
 
@@ -69,7 +69,7 @@ class Request
 
  const std::string GetSqlquery() const { return fsqlquery; }
 
- const std::vector<std::string> GetPro() const{ return fproperty; }
+ const std::vector<std::string> GetProperty() const{ return fproperty; }
 
  private:
 

@@ -20,9 +20,9 @@ class Context
 
  fCon_Info(coninf),
  fRequest(reque){}
- Context() = default;
+ Context() {};
 
- virtual ~Context() = default;
+ virtual ~Context() {};
 
  const Con_Info& Get_Con_Info() const { return fCon_Info; }
 

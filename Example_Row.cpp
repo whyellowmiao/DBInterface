@@ -1,12 +1,12 @@
 #include "DB_TableRow.h"
-#include "DBiResultPtr.h"
+#include "DBIResultPtr.h"
 
 class Example_Row : public DB_TableRow
 {
  public:
  
- Example_Row() = default;
- ~Example_Row() = default;
+ Example_Row() {};
+ ~Example_Row() {};
 
  void Store(Context&);
 
@@ -33,7 +33,10 @@ int main()
  Con_Info coninfo(MySQL, "tcp://127.0.0.1", "root", "Xiao3woaini!");
 
  std::vector<std::string>
- column {"name", "owner", "species"};
+ column;
+ column.push_back("name");
+ column.push_back("owner");
+ column.push_back("species");
  std::string table = "menagerie.pet";
  //std::string schema = "menagerie";
  Request request(column, table, lookup);
@@ -41,7 +44,7 @@ int main()
  Context context(coninfo, request);
 
  Example_Row row;
- DBiResultPtr<Example_Row> pr(context);
+ DBIResultPtr<Example_Row> pr(context);
 
  pr.Session();
 

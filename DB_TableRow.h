@@ -11,8 +11,8 @@ class DB_TableRow
 
  public:
 
- DB_TableRow() = default;
- virtual ~DB_TableRow() = default;
+ DB_TableRow() {};
+ virtual ~DB_TableRow() {};
 
  
 

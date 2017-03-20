@@ -4,7 +4,7 @@
 void MySQLInterface::Connect()
 {
 
- std::shared_ptr<sql::Connection>
+ sql::Connection*
  con(sql::mysql::get_driver_instance()
  ->connect(MySQL_Context.Get_Con_Info().GetURL(),
            MySQL_Context.Get_Con_Info().GetUSER(),
@@ -91,8 +91,11 @@ void MySQLInterface::Lookup_column()
  execute("use "+MySQL_Context.Get_Request().GetSchema());
  //Read out data from the table
  std::string read_query = "select ";
- for (auto i : MySQL_Context.Get_Request().GetPro())
- read_query = read_query + i + ",";
+ //for (auto i : MySQL_Context.Get_Request().GetPro())
+ int sizelength = MySQL_Context.Get_Request().GetProperty().size();
+ for (int i = 0; i < sizelength; i++)
+ read_query = read_query 
+            + MySQL_Context.Get_Request().GetProperty()[i] + ",";
  if(false == read_query.empty())
  read_query.erase(read_query.end()-1);
  read_query = read_query + " from "
@@ -106,7 +109,7 @@ void MySQLInterface::Lookup_column()
  #endif
 
  //Store the data
- std::shared_ptr<sql::ResultSet>
+ sql::ResultSet*
  res(MySQL_Result.GetStatement()->executeQuery(read_query));
 
  MySQL_Result.SetResult(res);
@@ -155,7 +158,7 @@ void MySQLInterface::CreateStmt()
 
 {
 
- std::shared_ptr<sql::Statement>
+ sql::Statement*
  stmt(MySQL_Result.GetConnection()->createStatement());
 
  MySQL_Result.SetStatement(stmt);

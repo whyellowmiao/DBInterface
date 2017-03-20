@@ -3,7 +3,7 @@
 
 #include "DBInterface.h"
 #include "DBInterfaceBase.h"
-#include "Result.h"
+#include "DBIResult.h"
 
 class MySQLInterface: public DBInterfaceBase
 {
@@ -28,11 +28,11 @@ class MySQLInterface: public DBInterfaceBase
 
  void CreateStmt();
 
- Result& FetchResult() {return MySQL_Result;}
+ DBIResult& FetchResult() {return MySQL_Result;}
 
  Context MySQL_Context;
 
- Result MySQL_Result;
+ DBIResult MySQL_Result;
 
 };
 

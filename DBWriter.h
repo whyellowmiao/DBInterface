@@ -10,10 +10,10 @@ template <class T> class DBWriter
 
 public:
 
-DBWriter() = default;
+DBWriter() {};
 DBWriter(const Context& c);
 
-virtual ~DBWriter() = default;
+virtual ~DBWriter() {};
 
 DBWriter<T>& operator<<(const T& row);
 
@@ -23,7 +23,7 @@ Context cx;
 
 T temrow;
 
-std::shared_ptr<std::vector<T>> data;
+std::vector<T>* data;
 
 };
 

@@ -18,7 +18,7 @@ class Con_Info
 
  public:
 
- Con_Info() = default;
+ Con_Info() {};
 
  Con_Info(DB_Type db):
 
@@ -42,7 +42,7 @@ class Con_Info
 
  const std::string GetPASSWORD() const { return fpassword; }
 
- virtual ~Con_Info() = default;
+ virtual ~Con_Info() {};
 
  private:
 

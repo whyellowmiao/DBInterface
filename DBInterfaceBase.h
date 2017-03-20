@@ -4,9 +4,9 @@
 #include <iostream>
 
 #include "Context.h"
-#include "Result.h"
+#include "DBIResult.h"
 
-class Result;
+class DBIResult;
 
 class DBInterfaceBase
 {
@@ -16,8 +16,8 @@ class DBInterfaceBase
  //protected:
  public:
 
- DBInterfaceBase() = default;
- virtual ~DBInterfaceBase() = default;
+ DBInterfaceBase() {};
+ virtual ~DBInterfaceBase() {};
 
  //private:
 
@@ -31,7 +31,7 @@ class DBInterfaceBase
 
  virtual void Insertdatacode() = 0;
 
- virtual Result& FetchResult() = 0;
+ virtual DBIResult& FetchResult() = 0;
 
 };
 
